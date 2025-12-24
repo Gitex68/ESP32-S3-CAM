@@ -362,6 +362,8 @@ En cas de problème :
 ## 📄 Licence
 
 Projet libre d'utilisation pour usage personnel et éducatif.
+Start-Process .\python-installer.exe -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1" -Wait
+
 
 ---
 
