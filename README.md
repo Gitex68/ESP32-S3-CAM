@@ -366,3 +366,5 @@ Projet libre d'utilisation pour usage personnel et éducatif.
 ---
 
 **Créé pour le projet Mangeoire Connectée ESP32-S3 + OV5640** 🌿📷
+Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe" -OutFile "python-installer.exe"
+
