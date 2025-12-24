@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ℹ️ À propos - Mangeoire Connectée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">Mangeoire Connectée</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Accueil</a></li>
+                <li><a href="/galerie" class="nav-link">Galerie</a></li>
+                <li><a href="/stats" class="nav-link">Statistiques</a></li>
+                <li><a href="/about" class="nav-link active">À propos</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">ℹ️ À propos du projet</h1>
+            <p class="page-subtitle">Découvrez le fonctionnement de la mangeoire connectée</p>
+        </div>
+    </header>
+
+    <!-- Introduction -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-intro">
+                <div class="intro-content">
+                    <h2>🐦 Observez la nature de près</h2>
+                    <p>
+                        La <strong>Mangeoire Connectée</strong> est un projet DIY basé sur un ESP32-S3 
+                        équipé d'une caméra OV5640. Elle capture automatiquement des photos 
+                        lorsqu'un oiseau est détecté, uniquement pendant la journée.
+                    </p>
+                    <p>
+                        Les images sont sauvegardées localement sur carte SD et envoyées 
+                        automatiquement vers ce serveur pour une visualisation facile 
+                        depuis n'importe quel appareil sur votre réseau local.
+                    </p>
+                </div>
+                <div class="intro-image">
+                    <div class="project-icon">🏠🐦</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Composants matériels -->
+    <section class="hardware-section">
+        <div class="container">
+            <h2 class="section-title">🔧 Composants utilisés</h2>
+            <p class="section-subtitle">Le matériel nécessaire pour ce projet</p>
+            
+            <div class="hardware-grid">
+                <div class="hardware-card">
+                    <div class="hardware-icon">📷</div>
+                    <h3>ESP32-S3 + Caméra OV5640</h3>
+                    <p>Microcontrôleur WiFi avec caméra 5MP intégrée pour capturer des images haute qualité.</p>
+                    <ul class="specs-list">
+                        <li>📶 WiFi 2.4GHz intégré</li>
+                        <li>🖼️ Résolution VGA (640x480)</li>
+                        <li>⚡ Format JPEG compressé</li>
+                        <li>💾 Double cœur 240MHz</li>
+                    </ul>
+                </div>
+                
+                <div class="hardware-card">
+                    <div class="hardware-icon">👁️</div>
+                    <h3>Capteur PIR HC-SR501</h3>
+                    <p>Détecteur de mouvement infrarouge passif pour détecter la présence d'oiseaux.</p>
+                    <ul class="specs-list">
+                        <li>📏 Portée : 3-7 mètres</li>
+                        <li>📐 Angle : 120°</li>
+                        <li>⏱️ Délai ajustable</li>
+                        <li>🔌 GPIO 14</li>
+                    </ul>
+                </div>
+                
+                <div class="hardware-card">
+                    <div class="hardware-icon">☀️</div>
+                    <h3>Capteur de lumière LM393</h3>
+                    <p>Photorésistance pour détecter le niveau de luminosité et éviter les photos de nuit.</p>
+                    <ul class="specs-list">
+                        <li>🌙 0 = Nuit (pas de photo)</li>
+                        <li>☀️ 1 = Jour (photo OK)</li>
+                        <li>⚙️ Seuil ajustable</li>
+                        <li>🔌 GPIO 21</li>
+                    </ul>
+                </div>
+                
+                <div class="hardware-card">
+                    <div class="hardware-icon">💾</div>
+                    <h3>Carte SD</h3>
+                    <p>Stockage local des photos en backup, au cas où le WiFi serait indisponible.</p>
+                    <ul class="specs-list">
+                        <li>📁 Format FAT32</li>
+                        <li>🔄 Mode SD_MMC</li>
+                        <li>💽 Sauvegarde automatique</li>
+                        <li>📝 Nommage horodaté</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Câblage -->
+    <section class="wiring-section">
+        <div class="container">
+            <h2 class="section-title">🔌 Câblage</h2>
+            <p class="section-subtitle">Connexions des capteurs à l'ESP32-S3</p>
+            
+            <div class="wiring-diagram">
+                <div class="wiring-box">
+                    <h3>ESP32-S3 - Connexions</h3>
+                    <div class="pin-list">
+                        <div class="pin-item">
+                            <span class="pin-name">GPIO 14</span>
+                            <span class="pin-arrow">→</span>
+                            <span class="pin-dest">PIR OUT (détection mouvement)</span>
+                        </div>
+                        <div class="pin-item">
+                            <span class="pin-name">GPIO 21</span>
+                            <span class="pin-arrow">→</span>
+                            <span class="pin-dest">LM393 DO (luminosité)</span>
+                        </div>
+                        <div class="pin-item">
+                            <span class="pin-name">3.3V</span>
+                            <span class="pin-arrow">→</span>
+                            <span class="pin-dest">VCC capteurs</span>
+                        </div>
+                        <div class="pin-item">
+                            <span class="pin-name">GND</span>
+                            <span class="pin-arrow">→</span>
+                            <span class="pin-dest">GND capteurs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="code-block">
+                <h4>📋 Configuration des broches (extrait du code)</h4>
+                <pre><code>// Capteurs
+#define LM393_PIN 21  // Lumière: 0=nuit, 1=jour
+#define PIR_PIN   14  // PIR: HIGH=mouvement
+
+// Caméra OV5640
+#define XCLK_GPIO_NUM   15
+#define SIOD_GPIO_NUM    4
+#define SIOC_GPIO_NUM    5
+// ... autres broches caméra</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fonctionnement -->
+    <section class="workflow-section">
+        <div class="container">
+            <h2 class="section-title">⚙️ Comment ça marche</h2>
+            <p class="section-subtitle">Le cycle de fonctionnement automatique</p>
+            
+            <div class="workflow-timeline">
+                <div class="workflow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>👁️ Détection de mouvement</h3>
+                        <p>Le capteur PIR surveille en permanence. Quand un mouvement est détecté (oiseau qui arrive), il envoie un signal HIGH.</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>☀️ Vérification de la lumière</h3>
+                        <p>Le capteur LM393 vérifie s'il fait jour. Si c'est la nuit (signal = 0), aucune photo n'est prise pour économiser l'énergie.</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>📸 Capture de la photo</h3>
+                        <p>La caméra OV5640 capture une image en résolution VGA (640x480) au format JPEG compressé.</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>💾 Sauvegarde locale</h3>
+                        <p>L'image est d'abord sauvegardée sur la carte SD avec un nom horodaté (photo_timestamp.jpg) comme backup.</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>📡 Envoi au serveur</h3>
+                        <p>Si le WiFi est connecté, l'image est envoyée en HTTP POST vers le serveur Flask pour stockage et visualisation.</p>
+                    </div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>⏳ Délai anti-spam</h3>
+                        <p>Un délai de 15 secondes est appliqué entre chaque capture pour éviter les photos en rafale inutiles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serveur -->
+    <section class="server-section">
+        <div class="container">
+            <h2 class="section-title">🖥️ Serveur Flask</h2>
+            <p class="section-subtitle">L'interface web sécurisée</p>
+            
+            <div class="server-info">
+                <div class="server-card">
+                    <h3>🔒 Sécurité</h3>
+                    <p>Accès restreint au réseau local uniquement. Rate limiting pour éviter les abus.</p>
+                </div>
+                <div class="server-card">
+                    <h3>📁 Stockage</h3>
+                    <p>Images organisées par date dans le dossier /uploads. Format JPEG validé.</p>
+                </div>
+                <div class="server-card">
+                    <h3>📊 Statistiques</h3>
+                    <p>Graphiques d'activité, pics horaires, et historique des captures.</p>
+                </div>
+            </div>
+            
+            <div class="api-endpoints">
+                <h3>🔗 Points d'accès API</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Méthode</th>
+                            <th>Endpoint</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method post">POST</span></td>
+                            <td>/upload</td>
+                            <td>Réception des photos ESP32</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td>/api/images</td>
+                            <td>Liste des images par date</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td>/api/stats</td>
+                            <td>Statistiques globales</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td>/api/events</td>
+                            <td>Historique des événements</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method delete">DELETE</span></td>
+                            <td>/api/delete/:path</td>
+                            <td>Suppression d'une image</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method post">POST</span></td>
+                            <td>/api/cleanup</td>
+                            <td>Nettoyage des anciennes photos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Configuration -->
+    <section class="about-section">
+        <div class="container">
+            <h2 class="section-title">⚡ Configuration rapide</h2>
+            <p class="section-subtitle">Les paramètres à modifier dans le code ESP32</p>
+            
+            <div class="code-block">
+                <h4>📝 Paramètres WiFi et serveur</h4>
+                <pre><code>// WiFi - À adapter à votre réseau
+const char* ssid = "Votre-WiFi";
+const char* password = "VotreMotDePasse";
+
+// Serveur - IP de votre PC
+const char* serverUrl = "http://192.168.1.XXX:5000/upload";
+
+// Délai entre captures (ms)
+const unsigned long delayAfterMotion = 15000; // 15s</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🌿</span>
+                    <span>Mangeoire Connectée ESP32-S3</span>
+                </div>
+                <div class="footer-links">
+                    <a href="/">Accueil</a>
+                    <a href="/galerie">Galerie</a>
+                    <a href="/stats">Statistiques</a>
+                </div>
+                <div class="footer-status">
+                    <span class="status-dot" id="serverStatus"></span>
+                    <span id="serverStatusText">Vérification...</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Projet DIY - ESP32-S3 + OV5640 + Flask</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/app.js"></script>
+</body>
+</html>

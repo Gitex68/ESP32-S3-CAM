@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📷 Galerie - Mangeoire Connectée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">Mangeoire Connectée</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Accueil</a></li>
+                <li><a href="/galerie" class="nav-link active">Galerie</a></li>
+                <li><a href="/stats" class="nav-link">Statistiques</a></li>
+                <li><a href="/about" class="nav-link">À propos</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">📷 Galerie Photos</h1>
+            <p class="page-subtitle">Toutes les captures de votre mangeoire connectée</p>
+        </div>
+    </header>
+
+    <!-- Section Filtres -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Période :</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">Tout</button>
+                        <button class="filter-btn" data-filter="today">Aujourd'hui</button>
+                        <button class="filter-btn" data-filter="week">7 jours</button>
+                        <button class="filter-btn" data-filter="month">30 jours</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="dateFilter">Date :</label>
+                    <input type="date" id="dateFilter" class="date-input">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sortOrder">Tri :</label>
+                    <select id="sortOrder" class="sort-select">
+                        <option value="newest">Plus récent</option>
+                        <option value="oldest">Plus ancien</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group" style="margin-left: auto;">
+                    <button id="selectModeBtn" class="btn btn-secondary btn-small">
+                        ☑️ Sélectionner
+                    </button>
+                    <button id="refreshBtn" class="btn btn-icon" title="Actualiser">
+                        🔄
+                    </button>
+                </div>
+            </div>
+            
+            <div class="gallery-info">
+                <span id="photoCount">-- photos</span>
+                <span class="separator">•</span>
+                <span id="dateRange">--</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Galerie -->
+    <section class="gallery-section">
+        <div class="container">
+            <!-- Toolbar de sélection -->
+            <div id="selectionToolbar" class="selection-toolbar">
+                <div class="selection-info">
+                    <span id="selectionCount">0 sélectionnée</span>
+                </div>
+                <button id="selectAllBtn" class="btn btn-small">Tout sélectionner</button>
+                <button id="deleteSelectedBtn" class="btn btn-danger btn-small" disabled>
+                    🗑️ Supprimer
+                </button>
+                <button id="cancelSelectionBtn" class="btn btn-small">Annuler</button>
+            </div>
+            
+            <!-- État de chargement -->
+            <div id="galleryLoading" class="gallery-loading">
+                <div class="spinner"></div>
+                <p>Chargement des photos...</p>
+            </div>
+            
+            <!-- Galerie vide -->
+            <div id="galleryEmpty" class="gallery-empty" style="display: none;">
+                <div class="empty-icon">📷</div>
+                <h3>Aucune photo</h3>
+                <p>Les photos capturées apparaîtront ici</p>
+            </div>
+            
+            <!-- Grille de la galerie -->
+            <div id="galleryGrid" class="gallery-grid"></div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <button id="lightboxClose" class="lightbox-close">×</button>
+        <button id="lightboxPrev" class="lightbox-nav lightbox-prev">‹</button>
+        <button id="lightboxNext" class="lightbox-nav lightbox-next">›</button>
+        
+        <div class="lightbox-content">
+            <img id="lightboxImage" src="" alt="">
+            <div class="lightbox-info">
+                <div class="lightbox-details">
+                    <h3 id="lightboxTitle"></h3>
+                    <p id="lightboxDate"></p>
+                </div>
+                <div class="lightbox-actions">
+                    <a id="lightboxDownload" href="" download class="btn btn-primary btn-small">
+                        ⬇️ Télécharger
+                    </a>
+                    <button id="lightboxDelete" class="btn btn-danger btn-small">
+                        🗑️ Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3 id="deleteModalTitle">Supprimer cette photo ?</h3>
+            <p>Cette action est irréversible.</p>
+            <div id="deleteFilename" class="modal-filename"></div>
+            <div id="deleteCountInfo" class="modal-count-info" style="display: none;"></div>
+            <div class="modal-actions">
+                <button id="cancelDelete" class="btn btn-secondary">Annuler</button>
+                <button id="confirmDelete" class="btn btn-danger">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🌿</span>
+                    <span>Mangeoire Connectée ESP32-S3</span>
+                </div>
+                <div class="footer-status">
+                    <span class="status-dot" id="serverStatus"></span>
+                    <span id="serverStatusText">Vérification...</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/galerie.js"></script>
+</body>
+</html>

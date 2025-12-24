@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Statistiques - Mangeoire Connectée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🌿</span>
+                <span class="logo-text">Mangeoire Connectée</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Accueil</a></li>
+                <li><a href="/galerie" class="nav-link">Galerie</a></li>
+                <li><a href="/stats" class="nav-link active">Statistiques</a></li>
+                <li><a href="/about" class="nav-link">À propos</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Changer de thème">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title">📊 Statistiques</h1>
+            <p class="page-subtitle">Analysez l'activité de votre mangeoire</p>
+        </div>
+    </header>
+
+    <!-- Stats Overview -->
+    <section class="stats-overview">
+        <div class="container">
+            <div class="stats-cards">
+                <div class="stat-card large">
+                    <div class="stat-icon">📷</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotalPhotos">--</div>
+                        <div class="stat-label">Photos totales</div>
+                    </div>
+                </div>
+                <div class="stat-card large">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotalDays">--</div>
+                        <div class="stat-label">Jours actifs</div>
+                    </div>
+                </div>
+                <div class="stat-card large">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statTotalSize">--</div>
+                        <div class="stat-label">Espace utilisé</div>
+                    </div>
+                </div>
+                <div class="stat-card large">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="statAvgDaily">--</div>
+                        <div class="stat-label">Moyenne/jour</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section">
+        <div class="container">
+            <div class="charts-grid">
+                <!-- Daily Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3>📅 Activité quotidienne</h3>
+                            <p class="chart-subtitle">Nombre de photos par jour</p>
+                        </div>
+                        <select id="dailyChartPeriod" class="chart-select">
+                            <option value="7">7 jours</option>
+                            <option value="14">14 jours</option>
+                            <option value="30" selected>30 jours</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Hourly Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3>🕐 Répartition horaire</h3>
+                            <p class="chart-subtitle">Activité par heure de la journée</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Weekly Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3>📊 Comparaison hebdomadaire</h3>
+                            <p class="chart-subtitle">Activité par jour de la semaine</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Peak Info -->
+                <div class="chart-card info-card">
+                    <div class="chart-header">
+                        <h3>🏆 Points clés</h3>
+                    </div>
+                    <div class="peak-info">
+                        <div class="peak-item">
+                            <span class="peak-label">📅 Jour record</span>
+                            <span class="peak-value" id="peakDay">--</span>
+                        </div>
+                        <div class="peak-item">
+                            <span class="peak-label">🕐 Heure de pointe</span>
+                            <span class="peak-value" id="peakHour">--</span>
+                        </div>
+                        <div class="peak-item">
+                            <span class="peak-label">📷 Record journalier</span>
+                            <span class="peak-value" id="peakCount">--</span>
+                        </div>
+                        <div class="peak-item">
+                            <span class="peak-label">🎬 Première capture</span>
+                            <span class="peak-value" id="firstCapture">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="recent-activity">
+        <div class="container">
+            <h2 class="section-title">🕐 Activité récente</h2>
+            <p class="section-subtitle">Les dernières captures reçues</p>
+            
+            <div id="activityList" class="activity-list">
+                <div class="gallery-loading">
+                    <div class="spinner"></div>
+                    <p>Chargement...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maintenance -->
+    <section class="maintenance-section">
+        <div class="container">
+            <div class="maintenance-card">
+                <h3>🧹 Maintenance</h3>
+                <p>Supprimez automatiquement les anciennes photos pour libérer de l'espace.</p>
+                <div class="maintenance-controls">
+                    <select id="cleanupDays" class="cleanup-select">
+                        <option value="7">Plus de 7 jours</option>
+                        <option value="14">Plus de 14 jours</option>
+                        <option value="30" selected>Plus de 30 jours</option>
+                        <option value="60">Plus de 60 jours</option>
+                        <option value="90">Plus de 90 jours</option>
+                    </select>
+                    <button id="cleanupBtn" class="btn btn-warning">
+                        🗑️ Nettoyer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🌿</span>
+                    <span>Mangeoire Connectée ESP32-S3</span>
+                </div>
+                <div class="footer-status">
+                    <span class="status-dot" id="serverStatus"></span>
+                    <span id="serverStatusText">Vérification...</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/app.js"></script>
+    <script src="/assets/js/stats.js"></script>
+</body>
+</html>
