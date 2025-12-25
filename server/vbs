@@ -1,0 +1,13 @@
+Set WshShell = CreateObject("WScript.Shell")
+
+' Se placer dans le dossier du script
+WshShell.CurrentDirectory = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName)
+
+' Lancer le serveur Python en arriere-plan (sans fenetre)
+WshShell.Run "python app.py", 0, False
+
+' Petite pause pour laisser le serveur demarrer
+WScript.Sleep 2000
+
+' Ouvrir la page web dans le navigateur par defaut
+WshShell.Run "http://192.168.1.20:5000", 0, False
